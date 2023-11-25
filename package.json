@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://xy-mf.github.io/tdesign-vue3-demo",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
