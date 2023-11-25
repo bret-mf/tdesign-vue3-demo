@@ -8,5 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     TButton: typeof import('tdesign-vue-next')['Button']
+    TSpace: typeof import('tdesign-vue-next')['Space']
   }
 }
