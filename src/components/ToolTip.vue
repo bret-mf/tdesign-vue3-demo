@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<IProps>(), {
 <style lang="scss" scoped>
 .tool-tip {
   --tip-arrow-width: 4px;
-  --tip-arrow-height: 5px;
+  --tip-arrow-height: 6px;
 
   display: inline-block;
   border-radius: 3px;

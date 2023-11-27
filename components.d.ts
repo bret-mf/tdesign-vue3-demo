@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Slider: typeof import('./src/components/Slider.vue')['default']
     TButton: typeof import('tdesign-vue-next')['Button']
     TCheckbox: typeof import('tdesign-vue-next')['Checkbox']
     TDatePicker: typeof import('tdesign-vue-next')['DatePicker']
@@ -15,6 +16,7 @@ declare module 'vue' {
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
     TIcon: typeof import('tdesign-vue-next')['Icon']
     TInput: typeof import('tdesign-vue-next')['Input']
+    TInputNumber: typeof import('tdesign-vue-next')['InputNumber']
     ToolTip: typeof import('./src/components/ToolTip.vue')['default']
     TOption: typeof import('tdesign-vue-next')['Option']
     TRadio: typeof import('tdesign-vue-next')['Radio']

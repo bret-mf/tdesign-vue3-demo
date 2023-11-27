@@ -7,23 +7,22 @@
     label-align="left"
     labelWidth="120px"
     size="large"
-    @reset="onReset"
-    @submit="onSubmit"
+    :preventSubmitDefault="true"
   >
     <div class="formGroup">
       <t-form-item label="选择分组方案" name="groupSet">
-        <t-select>
+        <t-select v-model="formData.groupSet">
           <t-option
             v-for="group in groupSetList"
             :key="group.value"
             :value="group.value"
+            :label="group.name"
           >
-            {{ group.name }}
           </t-option>
         </t-select>
       </t-form-item>
       <t-form-item label="标题" name="title">
-        <t-input placeholder="请输入内容" />
+        <t-input placeholder="请输入内容" v-model="formData.title" />
       </t-form-item>
       <t-form-item label="作业附件" name="upload">
         <div class="customUploadItem">
@@ -53,14 +52,19 @@
       </t-form-item>
     </div>
     <div class="formGroup">
-      <t-form-item label="选择分组方案" name="type">
-        <t-radio-group v-model="formData.type">
+      <t-form-item label="选择作业形式" name="type">
+        <t-radio-group v-model="formData.type" @change="changeType">
           <t-radio value="person">个人作业</t-radio>
           <t-radio value="group">分组作业</t-radio>
         </t-radio-group>
       </t-form-item>
       <t-form-item label="评分方式" name="method">
-        <ScoringMethod></ScoringMethod>
+        <ScoringMethod
+          :type="formData.type"
+          v-model:teacherReview="formData.teacherReview"
+          v-model:personalReview="formData.personalReview"
+          v-model:groupReview="formData.groupReview"
+        ></ScoringMethod>
       </t-form-item>
       <t-form-item label="发放">
         <Grant></Grant>
@@ -68,23 +72,28 @@
     </div>
     <div class="formGroup">
       <t-form-item label="成绩比例" name="type">
-        <t-slider
-          v-model="formData.scoreProportion"
-          :show-tooltip="true"
-          :marks="marks1"
-          :input-number-props="true"
-        />
+        <Slider v-model="formData.process" :surplus="20"> </Slider>
       </t-form-item>
       <t-form-item label="完成指标" name="completionTarget">
         <div class="completionTarget_formItem">
           <div class="completionTargetTop">
-            <div class="choice">
-              <t-radio value="none">无</t-radio>
-            </div>
-            <div class="choice">
-              <t-radio class="choice" value="need">有</t-radio>
-            </div>
-            <div class="select_box">
+            <t-radio
+              value="none"
+              :checked="formData.completionTarget.name === 'none'"
+              @change="changeCompletionTargetName('none')"
+              >无</t-radio
+            >
+            <t-radio
+              class="choice"
+              value="need"
+              :checked="formData.completionTarget.name === 'need'"
+              @change="changeCompletionTargetName('need')"
+              >有
+            </t-radio>
+            <div
+              class="select_box"
+              v-if="formData.completionTarget.name === 'need'"
+            >
               <t-select
                 placeholder="提交作业"
                 v-model="formData.completionTarget.value"
@@ -99,7 +108,10 @@
               </t-select>
             </div>
           </div>
-          <div class="completionTargetBottom">
+          <div
+            class="completionTargetBottom"
+            v-if="formData.completionTarget.name === 'need'"
+          >
             <ToolTip
               class="formToolTip"
               message="设置「完成指标」后，学生需达到条件才算完成。该活动将自动纳入学习分析的完成度统计，并作为学生学习进度的分母条件"
@@ -116,12 +128,16 @@ import { reactive, ref } from "vue";
 import ToolTip from "@/components/ToolTip.vue";
 import ScoringMethod from "./widgets/ScoringMethod.vue";
 import Grant from "./widgets/Grant.vue";
+import Slider from "@/components/Slider.vue";
 
 const tFormRf = ref();
 
 const FORM_RULES = {
   groupSet: [{ required: true, message: "选择分组方案" }],
-  title: [{ required: true, message: "选择分组方案" }],
+  title: [{ required: true, message: "请填写标题" }],
+  endTime: [{ required: true, message: "请选择结束时间" }],
+  reviewTime: [{ required: true, message: "请选择互评时间" }],
+  reviewCopies: [{ required: true, message: "请填写评阅份数" }],
 };
 
 const groupSetList = [
@@ -144,21 +160,45 @@ const completionTargets = [
   { name: "指标2", value: "指标2" },
 ];
 const formData = reactive({
+  groupSet: "",
+  title: "",
   type: "person",
   scoreProportion: "10",
+  process: 1,
+  teacherReview: true,
+  personalReview: false,
+  groupReview: false,
   completionTarget: {
     name: "none",
     value: "",
   },
 });
 
-const marks1 = {
-  100: "100",
+const changeType = (value: string) => {
+  if (value === "group") {
+    formData.groupReview = false;
+  }
+};
+
+const changeCompletionTargetName = (value: string) => {
+  formData.completionTarget.name = value;
 };
 
 const onReset = () => {};
 
-const onSubmit = () => {};
+const validate = () => {
+  tFormRf.value.validate();
+};
+
+const clearValidate = () => {
+  tFormRf.value.clearValidate();
+};
+
+defineExpose({
+  validate,
+  onReset,
+  clearValidate,
+});
 </script>
 
 <style lang="scss" scoped>

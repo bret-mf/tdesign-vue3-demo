@@ -10,9 +10,9 @@
           </t-select>
         </div>
       </t-form-item>
-      <t-form-item label="">
+      <t-form-item name="endTime">
         <template #label>
-          <div class="flex yCenter">
+          <div class="inlineFlex yCenter">
             <span> 作业截时间 </span>
             <t-tooltip content="作业截时间">
               <t-icon name="arrow-down-circle"></t-icon>
@@ -30,9 +30,9 @@
       </t-form-item>
 
       <div class="reviewTitle">学生互评设置</div>
-      <t-form-item>
+      <t-form-item name="reviewTime">
         <template #label>
-          <div class="flex yCenter">
+          <div class="inlineFlex yCenter">
             <span> 互评时间 </span>
             <t-tooltip content="互评时间">
               <t-icon name="arrow-down-circle"></t-icon>
@@ -56,7 +56,7 @@
         </div>
       </t-form-item>
 
-      <t-form-item label="评阅份数">
+      <t-form-item label="评阅份数" name="reviewCopies">
         <div class="flex yCenter reviewCopies">
           <t-input class="reviewInput" />
           <span>份/组</span>
@@ -67,7 +67,7 @@
     <div class="addButtonBox">
       <t-button theme="primary" variant="text">
         <template #icon><t-icon name="add" /></template>
-        新建
+        添加
       </t-button>
     </div>
   </div>
@@ -94,6 +94,10 @@
   width: 100%;
   display: flex;
 }
+
+.inlineFlex {
+  display: inline-flex;
+}
 .yCenter {
   align-items: center;
 }
@@ -118,9 +122,5 @@
 
 .addButtonBox {
   margin-top: 5px;
-
-  //   .t-button {
-  //     padding-left: 0;
-  //   }
 }
 </style>
