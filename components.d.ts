@@ -9,10 +9,13 @@ declare module 'vue' {
   export interface GlobalComponents {
     TButton: typeof import('tdesign-vue-next')['Button']
     TCheckbox: typeof import('tdesign-vue-next')['Checkbox']
+    TDatePicker: typeof import('tdesign-vue-next')['DatePicker']
+    TDialog: typeof import('tdesign-vue-next')['Dialog']
     TForm: typeof import('tdesign-vue-next')['Form']
     TFormItem: typeof import('tdesign-vue-next')['FormItem']
     TIcon: typeof import('tdesign-vue-next')['Icon']
     TInput: typeof import('tdesign-vue-next')['Input']
+    ToolTip: typeof import('./src/components/ToolTip.vue')['default']
     TOption: typeof import('tdesign-vue-next')['Option']
     TRadio: typeof import('tdesign-vue-next')['Radio']
     TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
