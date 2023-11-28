@@ -72,7 +72,13 @@
     </div>
     <div class="formGroup">
       <t-form-item label="成绩比例" name="type">
-        <Slider v-model="formData.scoreProportion" :surplus="20"> </Slider>
+        <Slider
+          v-model="formData.scoreProportion"
+          :min="0"
+          :max="100"
+          :surplus="100"
+        >
+        </Slider>
       </t-form-item>
       <t-form-item label="完成指标" name="completionTarget">
         <div class="completionTarget_formItem">
