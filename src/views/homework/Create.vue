@@ -72,7 +72,7 @@
     </div>
     <div class="formGroup">
       <t-form-item label="成绩比例" name="type">
-        <Slider v-model="formData.process" :surplus="20"> </Slider>
+        <Slider v-model="formData.scoreProportion" :surplus="20"> </Slider>
       </t-form-item>
       <t-form-item label="完成指标" name="completionTarget">
         <div class="completionTarget_formItem">
@@ -159,12 +159,23 @@ const completionTargets = [
   { name: "指标1", value: "指标1" },
   { name: "指标2", value: "指标2" },
 ];
-const formData = reactive({
+const formData = reactive<{
+  groupSet: string;
+  title: string;
+  type: "person" | "group";
+  scoreProportion: number;
+  teacherReview: boolean;
+  personalReview: boolean;
+  groupReview: boolean;
+  completionTarget: {
+    name: "none" | "need";
+    value: string;
+  };
+}>({
   groupSet: "",
   title: "",
   type: "person",
-  scoreProportion: "10",
-  process: 1,
+  scoreProportion: 0,
   teacherReview: true,
   personalReview: false,
   groupReview: false,
@@ -180,7 +191,7 @@ const changeType = (value: string) => {
   }
 };
 
-const changeCompletionTargetName = (value: string) => {
+const changeCompletionTargetName = (value: "none" | "need") => {
   formData.completionTarget.name = value;
 };
 
